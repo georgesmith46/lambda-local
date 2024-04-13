@@ -38,9 +38,9 @@ import utils = require('./lib/utils');
             'returning. This is false by default because our implementation isn\'t perfect and only "emulates" it.')
         .option('--envdestroy',
             '(optional) Destroy added environment on closing. Defaults to false')
-        .option('-v, --verboselevel <3/2/1/0>',
+        .option('-v, --verboselevel <3/2/1/0/-1>',
             '(optional) Default 3. Level 2 dismiss handler() text, level 1 dismiss lambda-local text ' +
-            'and level 0 dismiss also the result.', 3)
+            'and level 0 dismiss also the result. Level -1 only displays handler() text.', 3)
         .option('--envfile <path/to/env/file>',
             '(optional) Load additional environment variables from a file')
         .option('--inspect [[host:]port]',
@@ -60,7 +60,7 @@ import utils = require('./lib/utils');
         envdestroy = program.envdestroy,
         envfile = program.envfile,
         callbackWaitsForEmptyEventLoop = program.waitEmptyEventLoop,
-        verboseLevel = program.verboselevel;
+        verboseLevel = parseInt(program.verboselevel);
 
     var port;
     if (program.watch) {
@@ -71,6 +71,11 @@ import utils = require('./lib/utils');
             if(port < 1 || port > 65535) program.help();
         }
         eventPath = true;
+    }
+
+    if (isNaN(verboseLevel)) {
+        console.log("Invalid verboseLevel. Must be number.");
+        process.exit(1);
     }
 
     if (!lambdaPath || !eventPath) {

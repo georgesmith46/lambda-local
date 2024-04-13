@@ -749,6 +749,13 @@ describe("- Testing cli.js", function () {
             assert.equal(r.status, 0);
             assert.equal(r.output, "");
         });
+        it("should have only console output", function () {
+            var command = get_shell("node ../build/cli.js -l ./functs/test-func-print.js -e ./events/test-event.js -v -1");
+            var r = spawnSync(command[0], command[1]);
+            process_outputs(r);
+            assert.equal(r.status, 0);
+            assert.equal(r.output, "Function running :)\n");
+        });
     });
     if (get_node_major_version() >= 16) {
         describe("* Test --wait-empty-event-loop", function () {
