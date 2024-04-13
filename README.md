@@ -72,6 +72,7 @@ Executes a lambda given the `options` object, which is a dictionary where the ke
 | `callback`|optional, lambda third parameter [callback][1]. When left out a Promise is returned|
 | `onInvocationEnd`|optional. called once the invocation ended. useful when awslambda.streamifyResponse is used to distinguish between end of response stream and end of invocation. |
 | `clientContext`|optional, used to populated clientContext property of lambda second parameter (context)
+| `contextOverwrite`| optional, a function that overwrites the context object. It can get and overwrite the values of the context (such as awsRequestId). |
 
 #### `lambdaLocal.setLogger(logger)`
 #### `lambdaLocal.getLogger()`
